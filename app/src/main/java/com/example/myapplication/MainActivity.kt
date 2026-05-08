@@ -33,8 +33,22 @@ import com.example.myapplication.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        init {
+            System.loadLibrary("native-lib")
+        }
+    }
+
+    // Clean declaration without extra words
+    external fun stringFromJNI(): String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Fixed: added the missing () and }
+        android.util.Log.d("UI_LAYER", "Message: ${stringFromJNI()}")
+
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
